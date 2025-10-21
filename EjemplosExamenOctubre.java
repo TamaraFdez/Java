@@ -7,6 +7,9 @@ public class EjemplosExamenOctubre {
         System.out.println(contarVocales("hola como estamos"));
         System.out.println("Dando la vuelta al numero 3456 es = " + invetirNumero(3456) );
         System.out.println("MCD de 99 y 33 = " + mcd(99, 33));
+        System.out.println("Precio sesiones = " + calcularPrecio(1,5 ));
+        System.out.println("Nota = " + calificacion(10 ));
+        
     }
     public static String potencia(int n){
         if(n < 0){
@@ -48,6 +51,46 @@ public class EjemplosExamenOctubre {
         a = temporal;
      } 
         return a;
+    }
+    public static int calcularPrecio(int numeroSesion, int n){
+        int totalSesion = n+numeroSesion;
+        int precio = 0;
+        for(int i = numeroSesion; i < totalSesion;i++){
+            if(i < 4){
+                precio+= 150;
+            }else if(i > 3 && i < 7){
+                precio+=120;
+            }else{
+                precio+=100;
+            }
+        }
+        return precio;
+    }
+    public static String calificacion(int nota){
+        if(nota < 0 || nota > 10){
+            throw new IllegalArgumentException("Nota no valida");
+        }
+        switch (nota) {
+            case 0:   
+            case 1:
+            case 2:
+            case 3:
+            case 4: 
+                return (String)"Suspenso";
+            case 5:
+                return (String)"Aprobado";
+            case 6:
+            case 7:
+                return (String)"Bien";
+            case 8:
+            case 9:
+                return (String)"Notable";
+            case 10:
+            return (String)"Sobresaliente";
+            default:
+          
+            throw new IllegalStateException("Error inesperado en la nota: " + nota);
+        }
     }
 
 }
