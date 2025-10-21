@@ -9,7 +9,9 @@ public class EjemplosExamenOctubre {
         System.out.println("MCD de 99 y 33 = " + mcd(99, 33));
         System.out.println("Precio sesiones = " + calcularPrecio(1,5 ));
         System.out.println("Nota = " + calificacion(10 ));
-        
+        System.out.println("El total a pagar es "+  calcularInteres(75892, 30, 3.5));
+        System.out.println("Es palindromo" + esPalindromo("Anita lava la tina"));
+        System.out.println("Mike paga = "+ pagarPizza(29.95));
     }
     public static String potencia(int n){
         if(n < 0){
@@ -91,6 +93,30 @@ public class EjemplosExamenOctubre {
           
             throw new IllegalStateException("Error inesperado en la nota: " + nota);
         }
+    }
+    public static double calcularInteres(double c, int a, double i){
+        double total = c + (c * (i/100)*a);
+        return total;
+
+    }
+    public static boolean esPalindromo(String texto){
+        String text = texto.replace(" ", "").toLowerCase();
+        String invertText = new StringBuilder(text).reverse().toString();
+        return text.equals(invertText);
+         
+    }
+
+    public static double pagarPizza(double p){
+        // double tercio = Math.round((p/3)*100.0)/100.0;
+        // if(p < 5){
+        //     return p;
+        // }
+        // if(tercio >= 10){
+        //     return (double)p-10;
+        // }else{
+        //     return p-tercio;
+        // }
+        return Math.round((p < 5 ? p : p - Math.min(p/3, 10))*100.0)/100.0;
     }
 
 }
