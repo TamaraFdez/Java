@@ -6,6 +6,7 @@ public class EjemplosExamenOctubre {
         System.out.println(clasificarNumero(-1));
         System.out.println(contarVocales("hola como estamos"));
         System.out.println("Dando la vuelta al numero 3456 es = " + invetirNumero(3456) );
+        System.out.println("MCD de 99 y 33 = " + mcd(99, 33));
     }
     public static String potencia(int n){
         if(n < 0){
@@ -39,5 +40,14 @@ public class EjemplosExamenOctubre {
         return newN;
 
     }
-    
+    public static int mcd(int a, int b){
+     int temporal;
+     while(b!= 0){
+        temporal = b;
+        b= a%b;
+        a = temporal;
+     } 
+        return a;
+    }
+
 }
