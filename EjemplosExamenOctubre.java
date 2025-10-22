@@ -12,6 +12,7 @@ public class EjemplosExamenOctubre {
         System.out.println("El total a pagar es "+  calcularInteres(75892, 30, 3.5));
         System.out.println("Es palindromo" + esPalindromo("Anita lava la tina"));
         System.out.println("Mike paga = "+ pagarPizza(29.95));
+        System.out.println("Numero cuya raiz es más cercana" + raizCuadrada(111));
     }
     public static String potencia(int n){
         if(n < 0){
@@ -117,6 +118,10 @@ public class EjemplosExamenOctubre {
         //     return p-tercio;
         // }
         return Math.round((p < 5 ? p : p - Math.min(p/3, 10))*100.0)/100.0;
+    }
+    public static int raizCuadrada(int n){
+            return (int)Math.round(Math.sqrt(n));
+            
     }
 
 }
