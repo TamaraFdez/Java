@@ -1,113 +1,100 @@
 import java.io.*;
 import java.util.Scanner;
+ 
 
 public class Rolodex {
 
-    private static final String CSV_PATH = "writable/contacts.csv";
-    private static final String CSV_HEADER = "Nombre,Telefono,Email";
+    private static final String DIRECTORY = "writable";
+    private static final String FILE_PATH = DIRECTORY + "/contacts.csv";
 
     public static void main(String[] args) {
-        ensureCSVExists();
+        initializeCsvFile();
 
         Scanner scanner = new Scanner(System.in);
-        String continuar;
+         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█");
+        System.out.println("█░██░██░██░██░██░██░██░██░██░░░░░░░░░░█");
+        System.out.println("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("░░█░░░░█▀▀▀█░█▀▀█░█▀▀▄░▀█▀░█▄░░█░█▀▀█░░");
+        System.out.println("░░█░░░░█░░░█░█▄▄█░█░░█░░█░░█░█░█░█░▄▄░░");
+        System.out.println("░░█▄▄█░█▄▄▄█░█░░█░█▄▄▀░▄█▄░█░░▀█░█▄▄█░░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("Bienvenido al importador Rolodex a CSV");
+        System.out.println("Escribe 'exit' en cualquier momento para salir.");
 
-        do {
-            System.out.println("Introduce el nombre completo:");
-            String nombre = scanner.nextLine();
+        while (true) {
+            System.out.print("Nombre completo: ");
+            String name = scanner.nextLine().trim();
+            if (name.equalsIgnoreCase("exit")) break;
+            if (name.isEmpty()) {
+                System.out.println("El nombre no puede estar vacío.");
+                continue;
+            }
 
-            System.out.println("Introduce el número de teléfono:");
-            String telefono = scanner.nextLine();
+            System.out.print("Número de teléfono: ");
+            String phone = scanner.nextLine().trim();
+            if (phone.equalsIgnoreCase("exit")) break;
 
-            System.out.println("Introduce la dirección de email:");
-            String email = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine().trim();
+            if (email.equalsIgnoreCase("exit")) break;
 
-            if (validateEmail(email)) {
-                writeContact(nombre, telefono, email);
-                System.out.println("Contacto agregado correctamente.");
+             if (validateEmail(email)) {
+                 appendToCSV(name, phone, email);
+            System.out.println("✅ Contacto añadido correctamente.");
             } else {
                 System.out.println("Email inválido. No se guardó el contacto.");
             }
-
-            System.out.println("¿Deseas agregar otro contacto? (s/n)");
-            continuar = scanner.nextLine().trim().toLowerCase();
-        } while (continuar.equals("s"));
-        scanner.close();
-
-        System.out.println("Sesión finalizada. Todos los contactos guardados en " + CSV_PATH);
-    }
-
-    // Asegura que el archivo CSV exista y tenga encabezado correcto
-    private static void ensureCSVExists() {
-        File csvFile = new File(CSV_PATH);
-        File writableDir = new File("writable");
-
-        if (!writableDir.exists()) {
-            writableDir.mkdir();
         }
 
+        System.out.println("👋 Programa finalizado. ¡Hasta pronto!");
+        scanner.close();
+    }
+
+    // Método 1: Inicializa el CSV (crea si no existe y añade encabezados)
+    private static void initializeCsvFile() {
         try {
-            if (!csvFile.exists()) {
-                FileWriter fw = new FileWriter(csvFile, true);
-                fw.append(CSV_HEADER).append("\n");
-                fw.close();
-            } else {
-                // Verificar encabezado
-                BufferedReader br = new BufferedReader(new FileReader(csvFile));
-                String firstLine = br.readLine();
-                br.close();
-                if (firstLine == null || !firstLine.equals(CSV_HEADER)) {
-                    prependHeader(csvFile);
-                }
+            File dir = new File(DIRECTORY);
+            if (!dir.exists()) dir.mkdirs();
+
+            File file = new File(FILE_PATH);
+            if (!file.exists()) {
+                FileWriter writer = new FileWriter(file);
+                writer.write("Nombre,Telefono,Email\n");
+                writer.close();
+                System.out.println("Archivo CSV creado en: " + FILE_PATH);
             }
         } catch (IOException e) {
-            System.err.println("Error al inicializar el CSV: " + e.getMessage());
-            System.exit(1);
+            System.out.println("❌ Error al inicializar el archivo CSV: " + e.getMessage());
         }
     }
 
-    private static void prependHeader(File csvFile) throws IOException {
-        File tempFile = new File("writable/temp.csv");
-        BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
-        bw.write(CSV_HEADER);
-        bw.newLine();
+    // Método 2: Añade una nueva línea con los datos del contacto
+    private static void appendToCSV(String name, String phone, String email) {
+        try (FileWriter fw = new FileWriter(FILE_PATH, true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
 
-        BufferedReader br = new BufferedReader(new FileReader(csvFile));
-        String line;
-        while ((line = br.readLine()) != null) {
-            bw.write(line);
-            bw.newLine();
-        }
-        br.close();
-        bw.close();
+            out.println(escapeCsvField(name) + "," +
+                        escapeCsvField(phone) + "," +
+                        escapeCsvField(email));
 
-        csvFile.delete();
-        tempFile.renameTo(csvFile);
-    }
-
-    private static void writeContact(String nombre, String telefono, String email) {
-        try (FileWriter fw = new FileWriter(CSV_PATH, true);
-             BufferedWriter bw = new BufferedWriter(fw)) {
-
-            bw.write(escapeCSV(nombre) + "," + escapeCSV(telefono) + "," + escapeCSV(email));
-            bw.newLine();
         } catch (IOException e) {
-            System.err.println("Error al escribir en CSV: " + e.getMessage());
+            System.out.println("❌ Error al escribir en el archivo: " + e.getMessage());
         }
     }
 
-    // Escapa comas y comillas en los campos CSV
-    private static String escapeCSV(String field) {
-        if (field.contains(",") || field.contains("\"")) {
-            field = field.replace("\"", "\"\"");
-            field = "\"" + field + "\"";
+    // Método 3: Escapa campos que contengan comas o comillas
+    private static String escapeCsvField(String field) {
+        if (field.contains(",") || field.contains("\"") || field.contains("\n")) {
+            field = field.replace("\"", "\"\""); // escapa comillas internas
+            return "\"" + field + "\""; // envuelve el campo entre comillas
         }
         return field;
     }
-
-    // Validación simple de email
+    //Método 4: valida que el email contenta @ . y no contenta espacios
     private static boolean validateEmail(String email) {
         return email.contains("@") && email.contains(".") && !email.contains(" ");
     }
 }
-
