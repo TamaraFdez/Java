@@ -16,7 +16,7 @@ public class ExamenNoviembre {
         return '0' <= c && c <= '9';
      }
      public static boolean tieneFormatoNIF(char[] nif){
-        if(nif.length != 9)return false;
+        if(nif == null || nif.length != 9)return false;
         for(int i = 0; i <8; i++){
             if(!esDigit(nif[i]))return false;
         }
