@@ -8,6 +8,9 @@ public class Prácticaexamen {
         System.out.println(esColeccionAlternate(new int[] { 3, 4, 5, 6, 7, 8 }));
         System.out.println(Arrays.toString(invertirMitades(new int[] { 4, 5, 6, 7, 1 })));
         System.out.println(esPalindromo(new int[] { 1, 2, 3, 1 }));
+        System.out.println(convertirEnCadena(new int[]{1,2,3,4}));
+        System.out.println(esTriangular(new int[]{0,1,0}));
+        System.out.println(Arrays.toString(insertarEnMedio(new int[]{1,2,3,5}, 5)));
     }
 
     // helpers
@@ -17,7 +20,7 @@ public class Prácticaexamen {
 
     // ejercicio uno funcion tiene formato telefono
     public static boolean tieneFormatoTelefono(char[] telefono) {
-        if (telefono == null || telefono.length > 9)
+        if (telefono == null || telefono.length != 9)
             return false;
         for (int i = 0; i < telefono.length; i++) {
             if (!isNum(telefono[i]))
@@ -136,5 +139,57 @@ public class Prácticaexamen {
         }
         return true;
     }
+    public static String convertirEnCadena (int[] n){
+        if(n == null || n.length == 0){
+            throw new IllegalArgumentException("Array no válido");
+        }
+        String result = "";
+        for(int i = 0;i< n.length; i++){
+            if(i == n.length-1){
+                result += n[i];
+            }else if(i == 0){
+                result = result + n[i] + "-";
+            }else{
+            result =result +n[i]+ "-" ;}
+        }
+        return result;
+    }
+     public static boolean esTriangular(int [] n){
+        if(n == null || n.length < 3 || n.length%2 == 0){
+            throw new IllegalArgumentException("Array inválido");
+        }
+        for(int i = 1; i <= n.length/2; i++){
+            if(n[i-1] >= n[i])return false;
+        }
+
+        for(int i = n.length/2+1; i < n.length;i++){
+            if(n[i-1] <= n[i])return false;
+        }
+        return true;
+     }
+     public static int[] insertarEnMedio(int[] num, int valor){
+        int[] newNum = new int[num.length+1];
+        int mitad = num.length/2;
+        for(int i = 0, j= 0; i < newNum.length;i++){
+            if(num.length%2 == 0){
+                if (i < mitad || i > mitad) {  
+                    newNum[i] = num[j];
+                    j++;   
+                }else {
+                    newNum[i] = valor;
+                }
+            }else{
+                if(i == mitad){
+                    newNum[i] = valor;
+                }else{
+                  newNum[i] = num[j];
+                    j++;  
+                }
+
+            }
+        }
+        return newNum;
+
+     }
 
 }
