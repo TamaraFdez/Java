@@ -64,9 +64,92 @@ public class Practicaexamen3 {
         String[] result = new String[l];
         for(int i = 0, j = 0; i < money.length; i++){
             if(money[i] > 0){
-             
             result[j] = matriculas[i] + ":" + money[i];
             j++;}
+        }
+        return result;
+    }
+    public static int[] sumarIngreso (int[] recaudacion, String[] matriculas, String m, int n){
+        for(int i = 0; i < matriculas.length; i++){
+            if(matriculas[i].equals(m)){
+                recaudacion[i] += n;
+            }
+        }
+        return recaudacion;
+    }
+    public static int[] ordenarDescIngresos (int[]n){
+        int l = 0;
+        for(int num : n){
+            if(num > 0){
+                l++;
+            }
+        }
+        int[] result = new int[l];
+        Arrays.sort(n);
+        for(int i = n.length-1, x=0; i >= 0; i--){
+            if(n[i] > 0){
+                result[x]= n[i];
+                x++;
+            }
+        }
+        return result;
+    }
+    public static int[][] transpuesta(int[][] matrix){
+          int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        int[][] result = new int[cols][rows];
+
+        for(int i = 0 ; i < rows ; i++){
+            for(int j = 0 ; j < cols ; j++){
+                result[j][i] = matrix[i][j];
+            }
+        }
+        return result;
+    }
+    public static int[][] multiplicarEscalar(int[][] n, int m){
+        int[][] result = new int[n.length][n[0].length];
+        for(int i = 0; i < n.length;i++){
+            for(int j = 0; j < n[0].length; j++){
+                result[i][j] = n[i][j]*m;
+            }
+        }
+        return result;
+    }
+    public static int filaMasGrande (int[][] n){
+        int count = 0;
+        int indice = -1;
+        for(int i = 0; i < n.length; i++){
+            int x = 0;
+            for(int j = 0; j < n[0].length;j++){
+                x += n[i][j];
+            }
+            if(count < x){
+                count = x;
+                indice = i;
+            }
+        }
+        return indice;
+    }
+    public static int[][] multiplicarMatrices(int[][] A, int[][]B){
+        int filaA= A.length;
+        int colsA = A[0].length;
+        int filasB = B.length;
+        int colsB = B[0].length;
+
+        if(colsA != filasB){
+            return null;
+        }
+
+        int[][] result = new int[filaA][colsB];
+        for(int i = 0; i < filaA; i++){
+            for(int j = 0; j < colsB; j++){
+                int suma= 0;
+                for(int k = 0; k < colsA; k++){
+                    suma += A[i][k] * B[k][j];
+                }
+                result[i][j]= suma;
+            }
         }
         return result;
     }
