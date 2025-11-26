@@ -26,29 +26,29 @@ public class PracticaPreExamen {
         if (buscar(m, matricula) == -1) {
             return r;
         }else {
-            r[buscar(m, matricula)] *= v;
+            r[buscar(m, matricula)] += v;
         }
 
         return r;
     }
-    public static String[] losAlquiladosOrden(String[] m, int[]r){
-        for(int i = 0; i < m.length; i++){
-            for(int j = 0; j < m.length-i-1; i++){
-                if(r[j]<r[j+1]){
-                    int temR = r[j];
-                    r[j]= r[j+1];
-                    r[j+1] = temR;
+   public static String[] losAlquiladosOrden(String[] m, int[] r) {
+    for (int i = 0; i < m.length; i++) {
+        for (int j = 0; j < m.length - i - 1; j++) {
+            if (r[j] < r[j + 1]) {
 
-                    String temM = m[j];
-                    m[j] = m[j+1];
-                    m[j+1] = temM;
+                int tempR = r[j];
+                r[j] = r[j + 1];
+                r[j + 1] = tempR;
 
-                }
+                String tempM = m[j];
+                m[j] = m[j + 1];
+                m[j + 1] = tempM;
             }
-
         }
-        String[] result = losAlquilados(r, m);
-        return result;
     }
+
+    return losAlquilados(r, m); 
+}
+
     
 }
