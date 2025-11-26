@@ -65,7 +65,8 @@ public class Practicaexamen3 {
         for(int i = 0, j = 0; i < money.length; i++){
             if(money[i] > 0){
             result[j] = matriculas[i] + ":" + money[i];
-            j++;}
+            j++;
+        }
         }
         return result;
     }
