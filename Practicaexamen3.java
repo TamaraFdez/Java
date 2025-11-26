@@ -66,7 +66,8 @@ public class Practicaexamen3 {
             if(money[i] > 0){
              
             result[j] = matriculas[i] + ":" + money[i];
-            j++;}
+            j++;
+        }
         }
         return result;
     }
