@@ -49,6 +49,23 @@ public class PracticaPreExamen {
 
     return losAlquilados(r, m); 
 }
+    public static int[][] multiplicar (int[][] filas, int[][] columnas){
+        int rows = filas.length;
+        int cols = columnas[0].length;
+        int colsA = filas[0].length;
 
-    
+        int[][] result = new int[rows][cols];
+
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                int sum = 0;
+                for(int k = 0; k < colsA; k++){
+                    sum += filas[i][k] * columnas[k][j];
+                }
+
+                result[i][j]= sum;
+            }
+        }
+        return result;
+    }
 }
