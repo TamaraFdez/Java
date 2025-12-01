@@ -11,8 +11,17 @@ public class Rolodex {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bienvenido al Rolodex CSV mejorado!");
-        
+
         while (true) {
+            System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+            System.out.println("█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█");
+            System.out.println("█░██░██░██░██░██░██░██░██░██░░░░░░░░░░█");
+            System.out.println("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+            System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+            System.out.println("░░█░░░░█▀▀▀█░█▀▀█░█▀▀▄░▀█▀░█▄░░█░█▀▀█░░");
+            System.out.println("░░█░░░░█░░░█░█▄▄█░█░░█░░█░░█░█░█░█░▄▄░░");
+            System.out.println("░░█▄▄█░█▄▄▄█░█░░█░█▄▄▀░▄█▄░█░░▀█░█▄▄█░░");
+            System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
             System.out.println("\n===== MENÚ PRINCIPAL =====");
             System.out.println("1. Añadir contacto");
             System.out.println("2. Mostrar contactos");
@@ -84,7 +93,8 @@ public class Rolodex {
                 empty = false;
             }
 
-            if (empty) System.out.println("No hay contactos guardados.");
+            if (empty)
+                System.out.println("No hay contactos guardados.");
 
         } catch (IOException e) {
             System.out.println("❌ Error al leer el archivo.");
@@ -112,11 +122,13 @@ public class Rolodex {
 
                 System.out.print("Nuevo nombre (" + c[0] + "): ");
                 String newName = scanner.nextLine().trim();
-                if (!newName.isEmpty()) c[0] = newName;
+                if (!newName.isEmpty())
+                    c[0] = newName;
 
                 System.out.print("Nuevo teléfono (" + c[1] + "): ");
                 String newPhone = scanner.nextLine().trim();
-                if (!newPhone.isEmpty()) c[1] = newPhone;
+                if (!newPhone.isEmpty())
+                    c[1] = newPhone;
 
                 System.out.print("Nuevo email (" + c[2] + "): ");
                 String newEmail = scanner.nextLine().trim();
@@ -185,10 +197,9 @@ public class Rolodex {
 
             for (String[] c : contacts) {
                 out.println(
-                    escapeCsvField(c[0]) + "," +
-                    escapeCsvField(c[1]) + "," +
-                    escapeCsvField(c[2])
-                );
+                        escapeCsvField(c[0]) + "," +
+                                escapeCsvField(c[1]) + "," +
+                                escapeCsvField(c[2]));
             }
 
         } catch (IOException e) {
@@ -203,7 +214,8 @@ public class Rolodex {
     private static void initializeCsvFile() {
         try {
             File dir = new File(DIRECTORY);
-            if (!dir.exists()) dir.mkdirs();
+            if (!dir.exists())
+                dir.mkdirs();
 
             File file = new File(FILE_PATH);
             if (!file.exists()) {
@@ -220,10 +232,9 @@ public class Rolodex {
     private static void appendToCSV(String name, String phone, String email) {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)))) {
             out.println(
-                escapeCsvField(name) + "," +
-                escapeCsvField(phone) + "," +
-                escapeCsvField(email)
-            );
+                    escapeCsvField(name) + "," +
+                            escapeCsvField(phone) + "," +
+                            escapeCsvField(email));
 
         } catch (IOException e) {
             System.out.println("❌ Error al guardar contacto.");
